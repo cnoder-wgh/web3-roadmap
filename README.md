@@ -1,5 +1,7 @@
 ---
 description: Mastering Web3 Development | Web3 Learning Guide
+cover: .gitbook/assets/WechatIMG7746.jpeg
+coverY: 0
 ---
 
 # Web3 Roadmap
