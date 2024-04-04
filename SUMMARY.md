@@ -5,6 +5,7 @@
 ## 什么是Web3
 
 * [区块链的基础知识](shi-mo-shi-web3/qu-kuai-lian-de-ji-chu-zhi-shi.md)
+* [WEB3的基础知识](shi-mo-shi-web3/qu-kuai-lian-de-ji-chu-zhi-shi.md)
 
 ## 智能合约
 
