@@ -20,11 +20,16 @@ coverY: 0
 
 <figure><img src=".gitbook/assets/roadMap.webp" alt=""><figcaption></figcaption></figure>
 
-### 什么是Web3
+### 基础知识
 
-* [区块链的基础知识](ji-chu-zhi-shi/qu-kuai-lian-de-ji-chu-zhi-shi.md)
-* [web3的基础知识](shi-mo-shi-web3/web3fundamentals.md)
+* [区块链的基础知识](shi-mo-shi-web3/qu-kuai-lian-de-ji-chu-zhi-shi.md)
+* 去中心化网络、共识机制
+* 以太坊
+* 以太坊虚拟机、智能合约
 
-### 智能合约
+### SOLIDITY
 
-* [Page 1](broken-reference)
+* 基础知识
+* 项目实战
+
+### jh
