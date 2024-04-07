@@ -1,9 +1,10 @@
 # 区块链的基础知识
 
 ## 资料
-[肖臻老师公开课](https://www.bilibili.com/video/BV1Vt411X7JF/?spm_id_from=333.337.search-card.all.click)
 
-> 强烈建议大家耐心看完，能对区块链有个基础的认知
+[肖臻老师公开课](https://www.bilibili.com/video/BV1Vt411X7JF/?spm\_id\_from=333.337.search-card.all.click)
+
+> 强烈建议大家耐心看完，能对区块链有个基础的认知,看不懂没关系，快速过一遍，后面再加深理解
 
 ## BTC
 
@@ -15,9 +16,9 @@
 
 需要符合以下三条性质:
 
-- **collision resistance** 抗哈希碰撞能力
-- **hiding** 能够隐藏输入信息, 也就是没法从哈希结果反向推导出输入或者输入的规律
-- **puzzle friendly** 保证挖矿的难度, 除了暴力穷举没有捷径, pow 工作量证明
+* **collision resistance** 抗哈希碰撞能力
+* **hiding** 能够隐藏输入信息, 也就是没法从哈希结果反向推导出输入或者输入的规律
+* **puzzle friendly** 保证挖矿的难度, 除了暴力穷举没有捷径, pow 工作量证明
 
 #### 非对称加密
 
@@ -28,8 +29,6 @@
 随机生成私钥, 然后通过椭圆曲线乘法可以生成一系列公钥.
 
 比特币不直接用公钥作为地址, 而是做了一系列变换:
-
-
 
 ```c
 A = RIPEMD160(SHA256(K))
@@ -48,12 +47,9 @@ K: 公钥
 
 就是使用**哈希指针**的**区块**组成的**链表**.
 
+![blockchain](https://blog.cong.moe/blockchain/148488609-f7512dd9-54fc-47a3-b5c9-f3df3a5be389\_huce9f44d42356edc30d2886a43cbc0d74\_321499\_660x0\_resize\_box\_3.png)
 
-
-![blockchain](https://blog.cong.moe/blockchain/148488609-f7512dd9-54fc-47a3-b5c9-f3df3a5be389_huce9f44d42356edc30d2886a43cbc0d74_321499_660x0_resize_box_3.png)
-
-
-##### 区块
+**区块**
 
 表 7-1 区块结构
 
@@ -66,14 +62,14 @@ K: 公钥
 
 表 7-2 区块头结构
 
-| Size     | Field               | Description                                                  |
-| -------- | ------------------- | ------------------------------------------------------------ |
-| 4 bytes  | Version             | A version number to track software/protocol upgrades         |
-| 32 bytes | Previous Block Hash | A reference to the hash of the previous (parent) block in the chain |
-| 32 bytes | Merkle Root         | A hash of the root of the merkle tree of this block’s transactions |
+| Size     | Field               | Description                                                           |
+| -------- | ------------------- | --------------------------------------------------------------------- |
+| 4 bytes  | Version             | A version number to track software/protocol upgrades                  |
+| 32 bytes | Previous Block Hash | A reference to the hash of the previous (parent) block in the chain   |
+| 32 bytes | Merkle Root         | A hash of the root of the merkle tree of this block’s transactions    |
 | 4 bytes  | Timestamp           | The approximate creation time of this block (seconds from Unix Epoch) |
-| 4 bytes  | Difficulty Target   | The Proof-of-Work algorithm difficulty target for this block |
-| 4 bytes  | Nonce               | A counter used for the Proof-of-Work algorithm               |
+| 4 bytes  | Difficulty Target   | The Proof-of-Work algorithm difficulty target for this block          |
+| 4 bytes  | Nonce               | A counter used for the Proof-of-Work algorithm                        |
 
 区块头是 80 字节, 而区块要包含交易, 所以一般来说区块比区块头大小大**成百上千倍**.
 
@@ -96,29 +92,22 @@ K: 公钥
 1. 使用哈希指针
 2. 只有叶节点存储交易信息, 中间节点存储左右子节点哈希的哈希
 
-
-
-![merkle tree](https://blog.cong.moe/blockchain/148488855-737cd051-3806-44af-bb16-4471c9dd747a_hu3a256fbe6c6030082f8133963b4eead2_26539_660x0_resize_box_3.png)
-
-
+![merkle tree](https://blog.cong.moe/blockchain/148488855-737cd051-3806-44af-bb16-4471c9dd747a\_hu3a256fbe6c6030082f8133963b4eead2\_26539\_660x0\_resize\_box\_3.png)
 
 Merkle Root 也会存到区块头中, 和区块链类似, 校验 Merkle Root Hash 就能检测出区块中交易是否有被篡改.
 
-##### merkle proof
+**merkle proof**
 
 轻节点: 只保存区块头, 所以相较于全节点本地数据量会少非常多.
 
 为了方便**轻节点**验证交易是否存在.
 
-
-
-![merkle proof](https://blog.cong.moe/blockchain/148489405-9939cca4-eab5-4666-89aa-e37feb6f5678_hu0d578876805e5dd1c698dff7349cb133_215320_660x0_resize_box_3.png)
-
-
+![merkle proof](https://blog.cong.moe/blockchain/148489405-9939cca4-eab5-4666-89aa-e37feb6f5678\_hu0d578876805e5dd1c698dff7349cb133\_215320\_660x0\_resize\_box\_3.png)
 
 效率为 O(lgN), N 为交易数量.
 
 ### 1.4 协议
+
 #### 共识机制
 
 比特币网络节点之间通过用**算力**投票来争取记账权. 也就是矿工同时基于当前最长链都在本地构建一个本地最新区块, 谁先计算出符合要求的区块, 相当于谁获得了当前区块的记账权.
@@ -133,19 +122,13 @@ Merkle Root 也会存到区块头中, 和区块链类似, 校验 Merkle Root Has
 
 全节点需要在本地维护 UTXO (unspent transaction outputs, 未花费的交易输出).
 
-
-
-![transcation](https://blog.cong.moe/blockchain/148499592-48e0d70d-61ba-49a0-a195-7513c7cf273e_hu9c3b101a6e6047abf30dbcfbc122bf86_1022767_660x0_resize_box_3.png)
-
-
+![transcation](https://blog.cong.moe/blockchain/148499592-48e0d70d-61ba-49a0-a195-7513c7cf273e\_hu9c3b101a6e6047abf30dbcfbc122bf86\_1022767\_660x0\_resize\_box\_3.png)
 
 为了防止双花攻击, 转账交易时需要提供资金来源. 为了提高矿工打包你这笔交易的积极性, 需要支付一定的手续费.
 
 交易确认数: 假如某笔交易被写在了高度为 100 的区块中, 确认数为 1, 当前链每增加一个后续区块则确认数加一. 一般等 6 个以上确认才认为安全.
 
 每一笔交易都包含一个或多个输入(vin)和输出(vout)(出块奖励没有输入).
-
-
 
 ```json
 {
@@ -174,11 +157,7 @@ Merkle Root 也会存到区块头中, 和区块链类似, 校验 Merkle Root Has
 
 vin 用于说明币的来源. 验证来源时则是需要将 vin 中的每笔来源的 vin 脚本和它指向的交易的 vout 脚本执行, 不出错则表示合法.
 
-
-
-![image](https://blog.cong.moe/blockchain/148528728-e354e65d-2a0d-4707-a90e-6d369621d136_hu706bf11c366b8b1f5a4ba4adbb12b3e5_159914_660x0_resize_box_3.png)
-
-
+![image](https://blog.cong.moe/blockchain/148528728-e354e65d-2a0d-4707-a90e-6d369621d136\_hu706bf11c366b8b1f5a4ba4adbb12b3e5\_159914\_660x0\_resize\_box\_3.png)
 
 #### 比特币脚本
 
@@ -190,11 +169,7 @@ vin 用于说明币的来源. 验证来源时则是需要将 vin 中的每笔来
 2. P2PKH (pay to public key hash) 付款至公钥哈希
 3. P2SH (pay to script hash)
 
-
-
-![image](https://blog.cong.moe/blockchain/148716285-19c4dcb0-f9bb-4210-be95-b2ac274a2dee_hud060ea252b58d74dcd947b781f1ee1f7_108294_660x0_resize_box_3.png)
-
-
+![image](https://blog.cong.moe/blockchain/148716285-19c4dcb0-f9bb-4210-be95-b2ac274a2dee\_hud060ea252b58d74dcd947b781f1ee1f7\_108294\_660x0\_resize\_box\_3.png)
 
 ### 1.6 挖矿
 
@@ -219,45 +194,38 @@ New Difficulty = Old Difficulty * (20160 minutes / Actual Time of Last 2016 Bloc
 
 #### 节点类型
 
+![image](https://blog.cong.moe/blockchain/148513749-ee6cfcca-f220-4cbf-9f5c-7ad63d35402e\_hu582731fc7ca905888213051099311659\_251237\_660x0\_resize\_box\_3.png)
 
-
-![image](https://blog.cong.moe/blockchain/148513749-ee6cfcca-f220-4cbf-9f5c-7ad63d35402e_hu582731fc7ca905888213051099311659_251237_660x0_resize_box_3.png)
-
-
-
-
-
-![image](https://blog.cong.moe/blockchain/148513808-07d1072c-184b-4253-84fa-3be8d569e689_hu69fa0c55cdb0337136136169d0815670_272083_660x0_resize_box_3.png)
-
-
+![image](https://blog.cong.moe/blockchain/148513808-07d1072c-184b-4253-84fa-3be8d569e689\_hu69fa0c55cdb0337136136169d0815670\_272083\_660x0\_resize\_box\_3.png)
 
 挖矿需要全节点, 需要承担维护区块链系统功能的职责.
 
 #### 挖矿设备
-- CPU
-- GPU
-- ASIC 芯片 (专用芯片)
+
+* CPU
+* GPU
+* ASIC 芯片 (专用芯片)
 
 #### 矿池
 
 矿池就是多个矿工联合在一起, 共同分享收益(均摊风险), 解决收益不稳定的问题. 并且 pool manager 负责维护全节点的工作, 矿工只负责接收 manager 发放的挖矿题目并暴力求解哈希.
 
-1. 收益如何公平分配收益?
+1.  收益如何公平分配收益?
 
-   参考区块链难度, 统计每个矿工提交的 almost valid block 数量作为工作量证明, 按照这个比例分配. almost valid block 为降低难度的 target, 例如当前区块链难度要求为前面 76 个 0, 可以选择 60 个 0 作为 almost valid block. 这就是变相的局部算力证明.
+    参考区块链难度, 统计每个矿工提交的 almost valid block 数量作为工作量证明, 按照这个比例分配. almost valid block 为降低难度的 target, 例如当前区块链难度要求为前面 76 个 0, 可以选择 60 个 0 作为 almost valid block. 这就是变相的局部算力证明.
+2.  如何防止矿工偷取出块奖励?
 
-2. 如何防止矿工偷取出块奖励?
+    任务是由 pool manager 分配的, 所以矿主已经将出块奖励地址写进去了, 没办法改成自己的地址.
 
-   任务是由 pool manager 分配的, 所以矿主已经将出块奖励地址写进去了, 没办法改成自己的地址.
-
-   假如他修改成自己地址, 则他提交给 pool manager 的 almost valid block 会被检测出不合法.
+    假如他修改成自己地址, 则他提交给 pool manager 的 almost valid block 会被检测出不合法.
 
 #### 矿池的危害
 
-- 降低了 51% 攻击的难度
-- 可以封锁某些地址, 故意不把某些地址的交易信息打包
+* 降低了 51% 攻击的难度
+* 可以封锁某些地址, 故意不把某些地址的交易信息打包
 
 ### 1.7 分叉
+
 state fork: 一条链暂时出于多个分支的状态. 例如: 多个节点同时挖出区块, 分叉攻击
 
 protocol fork: 因为协议修改导致不同版本同时存在导致的分叉, 类似与软件的前后兼容性, 又分为**软分叉**和**硬分叉**.
@@ -266,19 +234,15 @@ protocol fork: 因为协议修改导致不同版本同时存在导致的分叉, 
 
 协议更改导致的永久性分叉, 除非所有节点更新软件(去中心化系统几乎不可能). 经常会导致主链分叉产生另一种数字货币, 例如 BTC/BCH, ETH/ETC.
 
-
-
-![image](https://blog.cong.moe/blockchain/148686229-b55d824e-86c1-49b9-a15b-2748f04be7e3_huab31f5edd4d169f4a95efc436a9c6186_355112_660x0_resize_box_3.png)
-
-
+![image](https://blog.cong.moe/blockchain/148686229-b55d824e-86c1-49b9-a15b-2748f04be7e3\_huab31f5edd4d169f4a95efc436a9c6186\_355112\_660x0\_resize\_box\_3.png)
 
 举个例子, 假如 BTC 协议将区块大小限制从 1MB 更改为 4MB, 并且一半以上算力已升级:
 
-- 升级后的软件会挖出大于 1MB 的区块, 并且认为合法
-- 没升级的软件不认为大于 1MB 的区块合法, 所以永远会从第一个大块前面的分叉开始挖
-- 升级后的软件认为两边都合法, 因为新版本算力多, 所以最长合法链肯定会变成大区块那边, 导致新旧版本彻底分叉
+* 升级后的软件会挖出大于 1MB 的区块, 并且认为合法
+* 没升级的软件不认为大于 1MB 的区块合法, 所以永远会从第一个大块前面的分叉开始挖
+* 升级后的软件认为两边都合法, 因为新版本算力多, 所以最长合法链肯定会变成大区块那边, 导致新旧版本彻底分叉
 
-##### 硬分叉导致过的问题
+**硬分叉导致过的问题**
 
 硬分叉导致一条链分叉成两条链, 并且共享分叉前的状态和历史, 所以除了数字货币名称外, 分叉前的地址和私钥还有余额都是一模一样的. 假如你在 ETH 分叉前 xxx 地址有 10 个 ETH, 则分叉后你这个相同的地址也会有 10 个 ETC, 并且私钥也是一样的. 所以会出现**重放攻击**, 私钥都一样所以签名也一样. 后续为了防止这种事情发生, 每条链都有了全局唯一的 chainID, 会在签名时使用.
 
@@ -286,16 +250,12 @@ protocol fork: 因为协议修改导致不同版本同时存在导致的分叉, 
 
 因协议更改导致的临时分叉.
 
-
-
-![image](https://blog.cong.moe/blockchain/148686851-f06f3fc4-a45b-4005-a78d-7f224fc41e90_hucb11b3977892eaeeb3ee0df35cc6987f_342227_660x0_resize_box_3.png)
-
-
+![image](https://blog.cong.moe/blockchain/148686851-f06f3fc4-a45b-4005-a78d-7f224fc41e90\_hucb11b3977892eaeeb3ee0df35cc6987f\_342227\_660x0\_resize\_box\_3.png)
 
 举个例子, 假如 BTC 协议将区块大小限制从 1MB 更改为 0.5MB, 并且一半以上算力已升级:
 
-- 升级后的软件会挖出小于 1MB 的区块, 并且认为大于 0.5MB 的区块非法, 所以他永远会选择小区块的链, 并且由于算力优势, 小区块链会变成最长合法链
-- 升级前的软件会认为两边都合法, 所以也会选择小区块链作为最长合法链, 但是它发布的大于 0.5MB 的大区块永远不会被认可, 所以每次它提交一个大区块, 升级后的软件就会分叉出一个小的链把大区块忽略掉
+* 升级后的软件会挖出小于 1MB 的区块, 并且认为大于 0.5MB 的区块非法, 所以他永远会选择小区块的链, 并且由于算力优势, 小区块链会变成最长合法链
+* 升级前的软件会认为两边都合法, 所以也会选择小区块链作为最长合法链, 但是它发布的大于 0.5MB 的大区块永远不会被认可, 所以每次它提交一个大区块, 升级后的软件就会分叉出一个小的链把大区块忽略掉
 
 实际中出现的例子: 扩展协议 BTC coinbase 字段含义(作为 UTXO 根哈希); BTC P2SH 扩展.
 
@@ -313,17 +273,9 @@ ETH 是基于账户余额的, 所以天然不会出现双花攻击, 但是为了
 
 #### 状态树
 
+![image](https://blog.cong.moe/blockchain/148688127-1bc268d3-8787-4d79-8e99-dfbeb408b925\_hu865514045feef6a10f340049a7eadfed\_195200\_660x0\_resize\_box\_3.png)
 
-
-![image](https://blog.cong.moe/blockchain/148688127-1bc268d3-8787-4d79-8e99-dfbeb408b925_hu865514045feef6a10f340049a7eadfed_195200_660x0_resize_box_3.png)
-
-
-
-
-
-![image](https://blog.cong.moe/blockchain/148688218-8466c106-0831-4576-a2a9-0e132fdac2fb_hu4af6fd0da113402100f85a46dd472198_142579_660x0_resize_box_3.png)
-
-
+![image](https://blog.cong.moe/blockchain/148688218-8466c106-0831-4576-a2a9-0e132fdac2fb\_hu4af6fd0da113402100f85a46dd472198\_142579\_660x0\_resize\_box\_3.png)
 
 每个新区块都会产生新的状态树, 但是没有发生改变的节点会共享, 只有改变了的节点会产生新的分支.
 
@@ -345,15 +297,11 @@ ETH 的出块速度为十几秒.
 
 为了鼓励矿工在出现分叉后快速达成一致, ETH 引入了 uncle block 奖励机制.
 
+![image](https://blog.cong.moe/blockchain/148688915-5ffa6f31-4151-4311-85fe-9d275d80be13\_hu928416d13c8de468dbd2d1f4df64073a\_385458\_660x0\_resize\_box\_3.png)
 
-
-![image](https://blog.cong.moe/blockchain/148688915-5ffa6f31-4151-4311-85fe-9d275d80be13_hu928416d13c8de468dbd2d1f4df64073a_385458_660x0_resize_box_3.png)
-
-
-
-- 叔父区块定义为七代以内的有共同祖先的区块, 并且必须是分叉的第一个区块
-- 每个区块最多可包含两个叔父区块, 当前获取记账权的节点每提交一个叔父区块可以额外获得 1/32 出块奖励(出块奖励目前为 3ETH)的 ETH
-- 被提交的叔父区块会根据所处的代数获得 7/8 - 2/8 出块奖励的 ETH
+* 叔父区块定义为七代以内的有共同祖先的区块, 并且必须是分叉的第一个区块
+* 每个区块最多可包含两个叔父区块, 当前获取记账权的节点每提交一个叔父区块可以额外获得 1/32 出块奖励(出块奖励目前为 3ETH)的 ETH
+* 被提交的叔父区块会根据所处的代数获得 7/8 - 2/8 出块奖励的 ETH
 
 ### 2.4 挖矿算法
 
@@ -367,45 +315,21 @@ cache 用于轻节点验证, DAG 用于矿工加速挖矿.
 
 挖矿就是改变 nonce 得到 block header hash, 对应 DAG 中的某个 index, 每次取这个 index 和 index+1 两个元素, 然后根据选取的这个 index 元素计算出下一次迭代对应的 index, 一共进行 64 次循环, 得到最终的哈希值再检查是否符合难度要求.
 
+![image](https://blog.cong.moe/blockchain/148716837-5f15486d-a47b-47ea-90af-20ac8b5edf99\_hudbfdc7aceaebf769b298962bacdfa045\_881734\_660x0\_resize\_box\_3.png)
 
+![image](https://blog.cong.moe/blockchain/148716698-e22c47eb-905a-4ece-b25c-6158a8203643\_hue82d38b0b1d880c5df09373f3bfebe06\_292583\_660x0\_resize\_box\_3.png)
 
-![image](https://blog.cong.moe/blockchain/148716837-5f15486d-a47b-47ea-90af-20ac8b5edf99_hudbfdc7aceaebf769b298962bacdfa045_881734_660x0_resize_box_3.png)
+![image](https://blog.cong.moe/blockchain/148716714-a6420b97-0b28-4414-a27d-e473733145ba\_hu10a190d78d6db9c94d6646ad2d85fb55\_550474\_660x0\_resize\_box\_3.png)
 
+![image](https://blog.cong.moe/blockchain/148720059-0203b78d-518d-4943-9271-6b1081a2e990\_hu5fa14ebeb92c3c136bb66d58bbd78897\_663435\_660x0\_resize\_box\_3.png)
 
-
-
-
-![image](https://blog.cong.moe/blockchain/148716698-e22c47eb-905a-4ece-b25c-6158a8203643_hue82d38b0b1d880c5df09373f3bfebe06_292583_660x0_resize_box_3.png)
-
-
-
-
-
-![image](https://blog.cong.moe/blockchain/148716714-a6420b97-0b28-4414-a27d-e473733145ba_hu10a190d78d6db9c94d6646ad2d85fb55_550474_660x0_resize_box_3.png)
-
-
-
-
-
-![image](https://blog.cong.moe/blockchain/148720059-0203b78d-518d-4943-9271-6b1081a2e990_hu5fa14ebeb92c3c136bb66d58bbd78897_663435_660x0_resize_box_3.png)
-
-
-
-
-
-![image](https://blog.cong.moe/blockchain/148720304-ffb1a536-edfc-4a3f-b9b4-203bb4cfc375_hu80bdc5bdf599f2f8e54999fc1d228fd0_978612_660x0_resize_box_3.png)
-
-
+![image](https://blog.cong.moe/blockchain/148720304-ffb1a536-edfc-4a3f-b9b4-203bb4cfc375\_hu80bdc5bdf599f2f8e54999fc1d228fd0\_978612\_660x0\_resize\_box\_3.png)
 
 ETH 没出现专用矿机, 另一方面原因在于一直在鼓吹要从 POW 转向 POS(proof of stake 权益证明, 现在仍未实装), 矿机开发商受到恐吓不敢开发矿机.
 
 ETH pre mining: 项目早期预留一部分 ETH 给开发者, 但是这部分比例非常高.
 
-
-
-![image](https://blog.cong.moe/blockchain/148720820-e58e0546-a0a3-40c6-a6aa-9acc8b073398_hu8d8e16b4e404ca45224dd92799a3bf7f_305595_660x0_resize_box_3.png)
-
-
+![image](https://blog.cong.moe/blockchain/148720820-e58e0546-a0a3-40c6-a6aa-9acc8b073398\_hu8d8e16b4e404ca45224dd92799a3bf7f\_305595\_660x0\_resize\_box\_3.png)
 
 #### 难度调整
 
@@ -413,23 +337,11 @@ ETH 挖矿难度不同于 BTC, 每个区块都有可能引起难度调整, 具�
 
 简单描述下就是和 出块时间, 是否有叔父区块, 难度炸弹 都有关系.
 
+![image](https://blog.cong.moe/blockchain/148721352-58132742-d4f6-4349-82bf-b03898331618\_huf9d3944f26e1ac9d4f014e64ad398cfc\_303889\_660x0\_resize\_box\_3.png)
 
+![image](https://blog.cong.moe/blockchain/148721214-ef1998fc-6f10-4291-a1ee-a6626195dd25\_hu5e60fae916b674d1d1716e8183f07aaa\_244130\_660x0\_resize\_box\_3.png)
 
-![image](https://blog.cong.moe/blockchain/148721352-58132742-d4f6-4349-82bf-b03898331618_huf9d3944f26e1ac9d4f014e64ad398cfc_303889_660x0_resize_box_3.png)
-
-
-
-
-
-![image](https://blog.cong.moe/blockchain/148721214-ef1998fc-6f10-4291-a1ee-a6626195dd25_hu5e60fae916b674d1d1716e8183f07aaa_244130_660x0_resize_box_3.png)
-
-
-
-
-
-![image](https://blog.cong.moe/blockchain/148721499-a6f29f9f-34bd-4992-9dc9-e6192866449d_huc1b80f177c289349716334624933608f_291599_660x0_resize_box_3.png)
-
-
+![image](https://blog.cong.moe/blockchain/148721499-a6f29f9f-34bd-4992-9dc9-e6192866449d\_huc1b80f177c289349716334624933608f\_291599\_660x0\_resize\_box\_3.png)
 
 ### 2.5 权益证明
 
@@ -437,11 +349,7 @@ ETH 挖矿难度不同于 BTC, 每个区块都有可能引起难度调整, 具�
 
 引入验证者角色, 验证者需要锁定一部分 ETH 资产作为保证金, 并且投票权重与保证金比例有关. 并且每过一段时间需要轮换.
 
-
-
-![image](https://blog.cong.moe/blockchain/148723041-f662856b-9cdb-40d3-988d-dfab7bd11bd7_hu19bb0c8c6624fe65c08554a3fde4f4d9_965235_660x0_resize_box_3.png)
-
-
+![image](https://blog.cong.moe/blockchain/148723041-f662856b-9cdb-40d3-988d-dfab7bd11bd7\_hu19bb0c8c6624fe65c08554a3fde4f4d9\_965235\_660x0\_resize\_box\_3.png)
 
 投票过程类似于 two-phase commit, 每过 50 个区块(记作一个 epoch)投一次票, 并且需要超过 2/3 验证者投票才算有效, 投票对于前一个 epoch 为 commit message, 对于后一个 epoch 为 prepare message.
 
@@ -449,11 +357,7 @@ ETH 挖矿难度不同于 BTC, 每个区块都有可能引起难度调整, 具�
 
 ### 2.6 智能合约
 
-
-
-![image](https://blog.cong.moe/blockchain/148723966-80a3c0ba-f80a-49c7-96c2-cb4cff0833de_huaac6f49b678078934a59eb6187b2b990_969127_660x0_resize_box_3.png)
-
-
+![image](https://blog.cong.moe/blockchain/148723966-80a3c0ba-f80a-49c7-96c2-cb4cff0833de\_huaac6f49b678078934a59eb6187b2b990\_969127\_660x0\_resize\_box\_3.png)
 
 solidity 是和 JavaScript 语法相近的面向对象的静态语言.
 
@@ -471,27 +375,15 @@ solidity 是和 JavaScript 语法相近的面向对象的静态语言.
 
 因为没法判断任意合约会不会出现死循环.
 
-
-
-![image](https://blog.cong.moe/blockchain/148724712-54b86ed7-0d7b-4e80-bb73-ebf6f9dca2ee_hu730e564c361477a2a05d046da56ee15b_378539_660x0_resize_box_3.png)
-
-
+![image](https://blog.cong.moe/blockchain/148724712-54b86ed7-0d7b-4e80-bb73-ebf6f9dca2ee\_hu730e564c361477a2a05d046da56ee15b\_378539\_660x0\_resize\_box\_3.png)
 
 #### 错误处理
 
-
-
-![image](https://blog.cong.moe/blockchain/148724936-b1d6189b-413f-477d-b558-94b229d4acf2_hu09c1e19e7fa9ecbd6644445e4df4d709_260574_660x0_resize_box_3.png)
-
-
+![image](https://blog.cong.moe/blockchain/148724936-b1d6189b-413f-477d-b558-94b229d4acf2\_hu09c1e19e7fa9ecbd6644445e4df4d709\_260574\_660x0\_resize\_box\_3.png)
 
 发生错误并不会退回已经使用的 gas fee.
 
-
-
-![image](https://blog.cong.moe/blockchain/148725035-aac0d17d-d947-457a-a546-d863f94a8d25_hu74d5570020f4c7e35c9b0c045918698c_262848_660x0_resize_box_3.png)
-
-
+![image](https://blog.cong.moe/blockchain/148725035-aac0d17d-d947-457a-a546-d863f94a8d25\_hu74d5570020f4c7e35c9b0c045918698c\_262848\_660x0\_resize\_box\_3.png)
 
 block header 头会设置 gas limit 即整个块的 gas fee 使用上限, 因为 gas fee 非常大意味着合约调用执行复杂度很高, 这样一个大区块会增加整个系统的压力, 并且获取记账权的矿工可以对当前块的 gas limit 自行调整 1/1024.
 
@@ -499,54 +391,33 @@ block header 头会设置 gas limit 即整个块的 gas fee 使用上限, 因为
 
 每个智能合约的调用最终都会在所有全节点执行, 因为所有节点都需要通过交易和合约调用驱动, 到达一致的状态. 所以智能合约执行的东西必须是确定的, 因此智能合约没法支持真正的随机吗, 也不能进行系统调用.
 
+![image](https://blog.cong.moe/blockchain/148726339-cb54ea95-2d81-4308-821e-975ea909ab34\_hub7256e802e4c9fdbf05259eb4d8f9221\_379271\_660x0\_resize\_box\_3.png)
 
-
-![image](https://blog.cong.moe/blockchain/148726339-cb54ea95-2d81-4308-821e-975ea909ab34_hub7256e802e4c9fdbf05259eb4d8f9221_379271_660x0_resize_box_3.png)
-
-
-
-
-
-![image](https://blog.cong.moe/blockchain/148726429-aff75bf2-5ae1-46d6-90b2-7262c82bdd7d_hu0383cfbbf6bd1f2111d83562ec021815_336467_660x0_resize_box_3.png)
-
-
+![image](https://blog.cong.moe/blockchain/148726429-aff75bf2-5ae1-46d6-90b2-7262c82bdd7d\_hu0383cfbbf6bd1f2111d83562ec021815\_336467\_660x0\_resize\_box\_3.png)
 
 message.sender 为调用者, 可以是合约, 而 tx.origin 则是触发这一系列调用的最外层外部账号转账者.
 
 #### 智能合约开发注意事项
 
-- 区块链不可篡改, 发生 bug 没法修改
-- 合约代码公开, 谁都能看, 容易被从源码找到漏洞
-- 多测试, 多在测试链上面验证
-- 开发支持能够接收转账和退款的智能合约时, 不要忽略合约也可以参与
+* 区块链不可篡改, 发生 bug 没法修改
+* 合约代码公开, 谁都能看, 容易被从源码找到漏洞
+* 多测试, 多在测试链上面验证
+* 开发支持能够接收转账和退款的智能合约时, 不要忽略合约也可以参与
 
 几个有 bug 合约的例子:
 
-1. 黑客使用合约参加竞拍, 导致拍卖结束后没法退钱给竞拍者
+1.  黑客使用合约参加竞拍, 导致拍卖结束后没法退钱给竞拍者
 
-   
+    ![image](https://blog.cong.moe/blockchain/148727811-74367911-0f0a-4b88-a826-e3b5f7e670bc\_huf6f16f9f594e5f821e36dba30926bdea\_261615\_660x0\_resize\_box\_3.png)
 
-   ![image](https://blog.cong.moe/blockchain/148727811-74367911-0f0a-4b88-a826-e3b5f7e670bc_huf6f16f9f594e5f821e36dba30926bdea_261615_660x0_resize_box_3.png)
+    向合约地址转账相当于没有指明方法的合约调用, 由于黑客合约没有 fallback 函数, 所以会报错导致整个 `auctionEnd` 函数回滚.
+2.  黑客使用合约参与竞拍, 导致重复取钱
 
-   
+    ![image](https://blog.cong.moe/blockchain/148728381-b2f6b5fd-1be6-4069-bbbb-e89ddd77e040\_hu607a246f0f3ea80bceb225645e63f8c2\_394144\_660x0\_resize\_box\_3.png)
 
-   向合约地址转账相当于没有指明方法的合约调用, 由于黑客合约没有 fallback 函数, 所以会报错导致整个 `auctionEnd` 函数回滚.
+    ![image](https://blog.cong.moe/blockchain/148728436-0fba15dc-46f0-47d3-9345-3ed7314f664c\_hu5e50b333453abbf33efb27984dea6af9\_462482\_660x0\_resize\_box\_3.png)
 
-2. 黑客使用合约参与竞拍, 导致重复取钱
-
-   
-
-   ![image](https://blog.cong.moe/blockchain/148728381-b2f6b5fd-1be6-4069-bbbb-e89ddd77e040_hu607a246f0f3ea80bceb225645e63f8c2_394144_660x0_resize_box_3.png)
-
-   
-
-   
-
-   ![image](https://blog.cong.moe/blockchain/148728436-0fba15dc-46f0-47d3-9345-3ed7314f664c_hu5e50b333453abbf33efb27984dea6af9_462482_660x0_resize_box_3.png)
-
-   
-
-   先调用转账再将可取回余额置零, 所以黑客可以在合约 fallback 函数中递归调用原合约 withdraw 方法导致重复取钱.
+    先调用转账再将可取回余额置零, 所以黑客可以在合约 fallback 函数中递归调用原合约 withdraw 方法导致重复取钱.
 
 ### 2.7 基于 ETH 发行山寨币和 NFT
 
@@ -557,8 +428,6 @@ message.sender 为调用者, 可以是合约, 而 tx.origin 则是触发这一�
 https://eips.ethereum.org/EIPS/eip-20
 
 本质就是利用智能合约维护了 `mapping(address => uint256) private _balances;` 地址到余额的账簿.
-
-
 
 ```solidity
 // 实现 ERC20 需要实现的接口
@@ -595,8 +464,6 @@ https://eips.ethereum.org/EIPS/eip-1155
 
 以 ERC1155 为例, 本质就是利用智能合约维护 `mapping(uint256 => mapping(address => uint256)) private _balances;` 多重账簿, 外层的 key 为 token id, 内层就是地址到余额的账簿.
 
-
-
 ```solidity
 interface ERC1155 /* is ERC165 */ {
     function safeTransferFrom(address _from, address _to, uint256 _id, uint256 _value, bytes calldata _data) external;
@@ -611,8 +478,6 @@ interface ERC1155 /* is ERC165 */ {
 
 发行方需要提供每个 token id 到 metadata 元信息的关系.
 
-
-
 ```solidity
 interface ERC1155Metadata_URI {
     function uri(uint256 _id) external view returns (string memory);
@@ -622,8 +487,6 @@ interface ERC1155Metadata_URI {
 ERC1155 规定 uri 函数需要返回 `https://token-cdn-domain/{id}.json` 格式的 metadata 资源地址, 而客户端需要将 id 替换成 token id, 并且是 64 位 hex , 例如: `https://token-cdn-domain/000000000000000000000000000000000000000000000000000000000004cce0.json` 就是 token id 为 `314592/0x4CCE0` 的最终元信息地址.
 
 而元信息需要包含资源地址和名称等信息:
-
-
 
 ```json
 {
@@ -656,8 +519,6 @@ ERC1155 规定 uri 函数需要返回 `https://token-cdn-domain/{id}.json` 格�
 
 例如:
 
-
-
 ```json
 {
   "name": "Gymbo Collection 7",
@@ -670,20 +531,17 @@ ERC1155 规定 uri 函数需要返回 `https://token-cdn-domain/{id}.json` 格�
 
 ## 一些常见问题
 
-1. 私钥丢失怎么办?
+1.  私钥丢失怎么办?
 
-   无解.
+    无解.
 
-   因为区块链的去中心化性质和私钥的重要性, 钱包软件也没有在线账户系统, 你的账户私钥都是在**本地**, 所以尽量备份好助记词, 不要使用截图等方式, 最好抄在纸上.
+    因为区块链的去中心化性质和私钥的重要性, 钱包软件也没有在线账户系统, 你的账户私钥都是在**本地**, 所以尽量备份好助记词, 不要使用截图等方式, 最好抄在纸上.
+2.  私钥泄漏怎么办?
 
-2. 私钥泄漏怎么办?
+    火速创建一个安全的账户地址, 并将所有余额转入.
+3.  作为智能合约开发者或用户, 发生被黑客攻击怎么办?
 
-   火速创建一个安全的账户地址, 并将所有余额转入.
+    如果是类似于上面示例中的拍卖重入攻击, 尽快使用相同的方法攻击合约, 但是你是作为正义的一方减少损失. 将合约余额转移到安全地址.
+4.  不要用切分私钥的方式使用共有财产账号
 
-3. 作为智能合约开发者或用户, 发生被黑客攻击怎么办?
-
-   如果是类似于上面示例中的拍卖重入攻击, 尽快使用相同的方法攻击合约, 但是你是作为正义的一方减少损失. 将合约余额转移到安全地址.
-
-4. 不要用切分私钥的方式使用共有财产账号
-
-   BTC 应使用 multi sig 多重签名的方式. 切分私钥会极大降低安全性, 例如切一半, 会将复杂度从 2 ^ 256 降低到 2 ^ 128.
+    BTC 应使用 multi sig 多重签名的方式. 切分私钥会极大降低安全性, 例如切一半, 会将复杂度从 2 ^ 256 降低到 2 ^ 128.
