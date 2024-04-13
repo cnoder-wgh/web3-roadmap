@@ -51,7 +51,7 @@ K: 公钥
 
 **区块**
 
-表 7-1 区块结构
+Block区块结构
 
 | Size               | Field               | Description                                           |
 | ------------------ | ------------------- | ----------------------------------------------------- |
@@ -60,7 +60,7 @@ K: 公钥
 | 1–9 bytes (VarInt) | Transaction Counter | How many transactions follow                          |
 | Variable           | Transactions        | The transactions recorded in this block               |
 
-表 7-2 区块头结构
+Block Header区块头结构
 
 | Size     | Field               | Description                                                           |
 | -------- | ------------------- | --------------------------------------------------------------------- |
@@ -105,16 +105,6 @@ Merkle Root 也会存到区块头中, 和区块链类似, 校验 Merkle Root Has
 ![merkle proof](https://blog.cong.moe/blockchain/148489405-9939cca4-eab5-4666-89aa-e37feb6f5678\_hu0d578876805e5dd1c698dff7349cb133\_215320\_660x0\_resize\_box\_3.png)
 
 效率为 O(lgN), N 为交易数量.
-
-### 1.4 协议
-
-#### 共识机制
-
-比特币网络节点之间通过用**算力**投票来争取记账权. 也就是矿工同时基于当前最长链都在本地构建一个本地最新区块, 谁先计算出符合要求的区块, 相当于谁获得了当前区块的记账权.
-
-假如多个节点同时计算出同一高度的区块, 则区块链会在短时间分叉, 每个节点会接收自己收到的第一个合法节点作为最长合法链, 它也会基于这个区块来计算下一个区块, 也就相当于投了这个区块一票, 最终肯定会有一条成为最长合法链(胜出), 剩下的链就会被淘汰.
-
-挖矿奖励: 挖矿消耗大量算力来保证区块链安全, 所以每个区块产生都会奖励区块创造者一定量的比特币. 最初为 50BTC, 每经过 21W 个区块, 奖励减半, 目前为 6.25BTC.
 
 ### 1.5 交易
 
@@ -167,7 +157,9 @@ vin 用于说明币的来源. 验证来源时则是需要将 vin 中的每笔来
 
 1. P2PK (pay to public key) 给公钥地址转账
 2. P2PKH (pay to public key hash) 付款至公钥哈希
-3. P2SH (pay to script hash)
+3. P2SH (pay to script hash) 向脚本哈希支付
+
+P2PKH 和 P2SH 两类地址的主要差别是，资金的转出条件不同。注意，转出指的是当发送方把比特币转入到地址上之后，接收方再把币转给其他人的这个行为。P2PKH 地址中的钱如果要转出，只需要提供公钥和私钥签名即可，形式比较固定。而 P2SH 中的资金要想转出，转出条件就可以很自由的进行设置。具体来讲，转出条件就是要写到一个赎回脚本(redeem script)中，P2SH 中的 S 代表赎回脚本。
 
 ![image](https://blog.cong.moe/blockchain/148716285-19c4dcb0-f9bb-4210-be95-b2ac274a2dee\_hud060ea252b58d74dcd947b781f1ee1f7\_108294\_660x0\_resize\_box\_3.png)
 

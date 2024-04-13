@@ -11,8 +11,9 @@
 
 ## solidity
 
-* [项目实战](solidity/xiang-mu-shi-zhan.md)
 * [基础知识](solidity/ji-chu-zhi-shi.md)
+* [项目实战](solidity/xiang-mu-shi-zhan.md)
+* [笔记](solidity/bi-ji.md)
 
 ## web3.j s
 
